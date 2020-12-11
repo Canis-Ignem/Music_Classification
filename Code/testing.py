@@ -1,7 +1,8 @@
 jon_hace_la_encuesta = True
-le_esta_haciendo_esto = True
-sorprender = "Eva deberia sorprender a Jon"
 
+import numpy as np
 
-if jon_hace_la_encuesta and le_esta_haciendo_esto:
-    print(sorprender)    
+a =  np.array([0,1,0,0])
+b = np.array([1,0,0,0])
+
+print(np.sum(np.abs(a-b)))
