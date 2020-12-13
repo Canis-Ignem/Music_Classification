@@ -5,7 +5,11 @@ import numpy as np
 #KERAS
 from keras.callbacks import EarlyStopping
 from keras.layers import LSTM
+<<<<<<< HEAD
 from keras.layers import recurrent, Conv1D, MaxPooling1D
+=======
+from keras.layers import recurrent, Conv1D, Conv2D, MaxPooling1D, MaxPooling2D, BatchNormalization
+>>>>>>> 10e6eccf81f7dda72c2815d56f00de655079624b
 from keras.layers.core import Dense, Flatten, Dropout
 from keras.models import Sequential
 from keras.preprocessing import sequence
@@ -20,6 +24,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 import data_handler as dh
 
+<<<<<<< HEAD
 data = dh.gather_data("./genres")
 X, Y = dh.format_data(data)
 train_data, test_data, train_target, test_target = train_test_split(X,Y, test_size= 0.1, random_state=31 )
@@ -65,3 +70,4 @@ plt.show()
 
 Johann_Sebastian_Bach_train_error = Johann_Sebastian_Bach.evaluate(train_data, train_target, batch_size=batch_size)
 Johann_Sebastian_Bach_test_error = Johann_Sebastian_Bach.evaluate(test_data, test_target, batch_size=batch_size)
+

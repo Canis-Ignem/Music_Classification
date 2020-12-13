@@ -31,6 +31,7 @@ Johann_Sebastian_Bach = Sequential()
 
 Johann_Sebastian_Bach.add(Conv1D(100, 5, activation = 'relu', input_shape = X.shape[1:] ))
 Johann_Sebastian_Bach.add(MaxPooling1D( pool_size= 2))
+<<<<<<< HEAD
 Johann_Sebastian_Bach.add(Dropout(0.2))
 
 Johann_Sebastian_Bach.add(Conv1D(300,3, activation = 'relu' ))
@@ -45,6 +46,19 @@ Johann_Sebastian_Bach.add(Dropout(0.3))
 
 Johann_Sebastian_Bach.add(Dense(10, activation='softmax'))
 opt = keras.optimizers.Adam(learning_rate=0.001)
+=======
+Johann_Sebastian_Bach.add(Conv1D(300,3, activation = 'relu' ))
+Johann_Sebastian_Bach.add(MaxPooling1D( pool_size= 2))
+#Johann_Sebastian_Bach.add(Conv1D(180,2, activation = 'relu' ))
+#Johann_Sebastian_Bach.add(Dropout(0.2))
+#Johann_Sebastian_Bach.add(Conv1D(2160,2, activation = 'relu' ))
+#Johann_Sebastian_Bach.add(Dropout(0.2))
+Johann_Sebastian_Bach.add(Flatten())
+#Johann_Sebastian_Bach.add(Dense(120, activation='relu'))
+#Johann_Sebastian_Bach.add(Dense(30, activation='relu'))
+Johann_Sebastian_Bach.add(Dense(10, activation='softmax'))
+opt = keras.optimizers.Adam(learning_rate=0.0001)
+>>>>>>> 10e6eccf81f7dda72c2815d56f00de655079624b
 Johann_Sebastian_Bach.compile(loss="categorical_crossentropy", optimizer=opt, metrics=['accuracy'])
 
 history = Johann_Sebastian_Bach.fit(train_data, train_target, batch_size= 200, epochs= 200, validation_data=(test_data,test_target))
