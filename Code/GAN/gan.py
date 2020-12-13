@@ -20,7 +20,7 @@ from keras import objectives
 from keras import models
 from keras import layers
 import play
-
+import numpy as np
 
 # Used for plotting and display of figures
 import matplotlib
@@ -175,4 +175,6 @@ print(samples.shape)
 
 print(samples)
 
+with open("musica.npy","rb") as f:
+    np.save(f,samples[0],  allow_pickle=True)
 play.play(samples[0])

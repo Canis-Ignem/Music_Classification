@@ -49,4 +49,19 @@ Johann_Sebastian_Bach.compile(loss="categorical_crossentropy", optimizer=opt, me
 
 history = Johann_Sebastian_Bach.fit(train_data, train_target, batch_size= 200, epochs= 200, validation_data=(test_data,test_target))
 
-Johann_Sebastian_Bach.save("Bach.h5")
+#Johann_Sebastian_Bach.save("Bach.h5")
+
+plt.title("Close for AIG index", fontsize=14)
+plt.plot(history.history["accuracy"],'r-')
+plt.xlabel("Epoch")
+plt.ylabel("MSE")
+plt.show()
+
+plt.title("close for AIG index", fontsize=14)
+plt.plot(history.history["val_accuracy"],'r-')
+plt.xlabel("Epoch")
+plt.ylabel("VAL_MSE")
+plt.show()
+
+Johann_Sebastian_Bach_train_error = Johann_Sebastian_Bach.evaluate(train_data, train_target, batch_size=batch_size)
+Johann_Sebastian_Bach_test_error = Johann_Sebastian_Bach.evaluate(test_data, test_target, batch_size=batch_size)
