@@ -32,7 +32,7 @@ print(X.shape, Y.shape)
 number_cells = 100
 look_back = 60
 batch_size = 100
-epochs = 200
+epochs = 177
 
 
 
@@ -52,14 +52,14 @@ Ludwig_van_Beethoven.add (Dense (10,activation = 'softmax'))
 opt = keras.optimizers.Adam(learning_rate=0.0001)
 Ludwig_van_Beethoven.compile (loss ="categorical_crossentropy", metrics = ["categorical_crossentropy"] , optimizer = opt)   
 
+Ludwig_van_Beethoven.summary()
 
 
-
-history = Ludwig_van_Beethoven.fit(train_data, train_target, batch_size= 200, epochs= epochs, validation_data=(test_data,test_target))
+history = Ludwig_van_Beethoven.fit(train_data, train_target, batch_size= 100, epochs= epochs, validation_data=(test_data,test_target))
 Ludwig_van_Beethoven.save("Beethoven.h5")
 
 Ludwig_van_Beethoven = keras.models.load_model('Beethoven.h5')
-'''
+
 num = 100
 test = test_data
 k = test_target
@@ -71,7 +71,7 @@ for i in range(num):
     if b == c:
         cont += 1
 print(cont)
-'''
+
 '''
 plt.title("Close for AIG index", fontsize=14)
 plt.plot(history.history["categorical_crossentropy"],'r-')

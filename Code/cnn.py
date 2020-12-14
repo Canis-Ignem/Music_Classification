@@ -39,6 +39,7 @@ Johann_Sebastian_Bach.add(Dropout(0.2))
 Johann_Sebastian_Bach.add(Conv1D(300,3, activation = 'relu' ))
 Johann_Sebastian_Bach.add(MaxPooling1D( pool_size= 2))
 Johann_Sebastian_Bach.add(Dropout(0.2))
+
 Johann_Sebastian_Bach.add(Conv1D(180,2, activation = 'relu' ))
 Johann_Sebastian_Bach.add(MaxPooling1D( pool_size= 2))
 Johann_Sebastian_Bach.add(Dropout(0.2))
@@ -50,22 +51,15 @@ Johann_Sebastian_Bach.add(Dense(10, activation='softmax'))
 opt = keras.optimizers.Adam(learning_rate=0.0001)
 Johann_Sebastian_Bach.compile(loss="categorical_crossentropy", optimizer=opt, metrics=['accuracy'])
 
-history = Johann_Sebastian_Bach.fit(train_data, train_target, batch_size= 200, epochs= 300, validation_data=(test_data,test_target))
+history = Johann_Sebastian_Bach.fit(train_data, train_target, batch_size= 200, epochs= 600, validation_data=(test_data,test_target))
 
-Johann_Sebastian_Bach.save("Bach.h5")
+Johann_Sebastian_Bach.save("Bach2.h5")
 
-plt.title("Close for AIG index", fontsize=14)
-plt.plot(history.history["accuracy"],'r-')
-plt.xlabel("Epoch")
-plt.ylabel("MSE")
-plt.show()
+Johann_Sebastian_Bach.summary()
 
-plt.title("close for AIG index", fontsize=14)
-plt.plot(history.history["val_accuracy"],'r-')
-plt.xlabel("Epoch")
-plt.ylabel("VAL_MSE")
-plt.show()
+Johann_Sebastian_Bach = keras.models.load_model("Bach2.h5")
 
 Johann_Sebastian_Bach_train_error = Johann_Sebastian_Bach.evaluate(train_data, train_target, batch_size=200)
 Johann_Sebastian_Bach_test_error = Johann_Sebastian_Bach.evaluate(test_data, test_target, batch_size=200)
 
+print(Johann_Sebastian_Bach_train_error, Johann_Sebastian_Bach_test_error)

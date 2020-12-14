@@ -67,61 +67,53 @@ def get_batch(data,classes, batch_size = 100):
    return data[indices] , classes[indices]
 
 
-def split_audio(path):
-    
-
-    #for dir0 in os.listdir(path):
-        
-        #full_path=os.path.join(path, dir0) 
-        
-        #if os.path.isdir(full_path):
-        #    print(dir0)
-            
-        for file in os.listdir(path):
-            
-            music_path=os.path.join(path, file)
-            
-            for i in range(10):
-                t1 = 3*(i)*1000
-                t1 = 3*(i+1)*1000
-                audio = AudioSegment.from_wav(music_path)
-                audio.export(file[:len(file)-4]+str(i)+".wav" ,format='wav')
-
-def create_data_img(path):
-    
-        
-    for file in os.listdir(path):
-        
-        music_path=os.path.join(path, file)
-        
-        y, sr = load_audio(music_path)
-        mels = librosa.feature.melspectrogram(y = y, sr =sr)
-        fig = plt.Figure()
-        canvas = FigureCanvas(fig)
-        p = plt.imshow(librosa.power_to_db(mels,ref = np.max))
-        plt.savefig(file+".png")
-                
-def gather_data_img(path):
-    
-    data = []
-       
-    for file in os.listdir(path):
-        img_path = os.path.join(path, file)
-        img = Image.open(img_path)
-        img = np.array(img)
-        data.append(img)
-    return np.array(data)
-
-
-def get_classes_img():
+# 258 430
+def create_data_mels(path):
+    data = np.zeros((3000,128,430))
     classes = []
-    n = 0
-    for i in range(1000):
-        ohe = np.zeros(10)
-        if i % 100 == 0 and i != 0:
-            n +=1
-        ohe[n] = 1
-        classes.append(ohe)
-    return np.array(classes)
+    n = -1
+    i = 0
+    for dir0 in os.listdir(path):
 
-#create_data_img("./genres_img")
+        full_path=os.path.join(path, dir0)
+
+        if os.path.isdir(full_path):
+            print(dir0)
+            n += 1
+            for file in os.listdir(full_path):
+                ohe = np.zeros(10)
+                ohe[n] = 1
+                for j in range(24):
+                    classes.append(ohe)
+                
+                music_path=os.path.join(full_path, file)
+                
+                y, sr = load_audio(music_path)
+                mels = librosa.feature.melspectrogram(y = y, sr =sr)
+                #print(mels.shape)
+                mels = mels[:,:1290]
+                '''
+                #mels = np.reshape(mels, (256,645))
+                data[i,:,:] = mels
+                i += 1
+                '''
+                data[i,:,:] = mels[:,:430]
+                i += 1
+                data[i,:,:] = mels[:,430:860]
+                i += 1
+                data[i,:,:] = mels[:,860:]
+                i += 1
+                
+                '''
+                a = mels[:,:430]
+                data[i,:,:] = a
+                i += 1
+                for i in range(1,2):
+                    b = mels[:,430*i:430*(i+1)]
+                    data[i,:,:] = b
+                    i += 1
+                data[i,:,:] = mels[:,430*2:]
+                '''
+    data = np.reshape(data,(24000,16,430))
+    return data,np.array(classes)
+
