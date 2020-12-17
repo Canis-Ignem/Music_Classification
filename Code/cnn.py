@@ -53,10 +53,10 @@ Johann_Sebastian_Bach.compile(loss="categorical_crossentropy", optimizer=opt, me
 
 Johann_Sebastian_Bach.summary()
 
-history = Johann_Sebastian_Bach.fit(train_data, train_target, batch_size= 200, epochs= 506, validation_data=(valid_data,valid_target))
+#history = Johann_Sebastian_Bach.fit(train_data, train_target, batch_size= 200, epochs= 506, validation_data=(valid_data,valid_target))
 
-Johann_Sebastian_Bach.save("Bach_new.h5")
-
+#Johann_Sebastian_Bach.save("Bach_new.h5")
+'''
 plt.title("Categorical_crossentropy loss", fontsize=14)
 plt.plot(history.history["categorical_crossentropy"],'r-')
 plt.xlabel("Epoch")
@@ -68,7 +68,7 @@ plt.plot(history.history["val_categorical_crossentropy"],'r-')
 plt.xlabel("Epoch")
 plt.ylabel("VAL_CCE")
 plt.show()
-
+'''
 test = dh.gather_data_test("./test")
 test_data, test_target = dh.format_data_test(test)
 
@@ -85,7 +85,55 @@ print(Johann_Sebastian_Bach_train_error,Johann_Sebastian_Bach_valid_error, Johan
 
 ##Predict a file
 
-a = test[:100] #One wac file
+one_song = test_data[:100,:,:] #blues song
+print(one_song.shape)
+res = Johann_Sebastian_Bach.predict(one_song)
+cont = np.zeros((10))
+for i in range(res.shape[0]):
+    idx = np.where(res[i] == res[i].max())
+    cont[idx] += 1
+print(cont)
 
-res = Johann_Sebastian_Bach.predict(a)
 
+#Predict all files and showcase the matrix
+
+contL =cont = np.zeros((50,10))
+idx = 0
+i = 0
+
+while i < test_data.shape[0]:
+    #print(i)
+    song = test_data[i:(i+100),:,:]
+    res = Johann_Sebastian_Bach.predict(song)
+    for j in range(res.shape[0]):
+        max_idx = np.where(res[j] == res[j].max())
+        #print(max_idx[0][0])
+        contL[idx][max_idx] += 1
+    i += 100
+    idx += 1
+print(contL)
+
+#Showcase accuracy
+
+acc = 0
+#print(test_target[1])
+new_test = np.zeros((50))
+j = 0
+idx = 0
+while j < test_target.shape[0]:
+    corr_idx = np.where(test_target[j] == test_target[j].max())
+    new_test[idx] = corr_idx[0][0]
+    j+= 100
+    idx += 1
+print(new_test.shape)
+
+wrong = []
+
+for i in range(contL.shape[0]):
+    max_idx = np.where(contL[i] == contL[i].max())
+    if max_idx[0][0] == new_test[i]:
+        acc += 1
+    else:
+        wrong.append(i)
+print(acc/contL.shape[0])
+print("this are the one we got wrong", wrong)
