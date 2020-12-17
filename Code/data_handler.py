@@ -37,6 +37,41 @@ def gather_data(path):
 
 #a = gather_data("./genres")
 
+def gather_data_test(path):
+
+    music = []
+        
+    for file in os.listdir(path):
+            
+        music_path=os.path.join(path, file)
+        y, _ = load_audio(music_path) 
+        music.append(y)
+            
+    return np.array(music)  
+
+
+def format_data_test(data):
+    splitedData = []
+    classes = []
+    n = 0
+    
+    mod = []
+    for i in data:
+        i = i[:660000]
+        a = np.split(i,100)
+        for j in a:
+            mod.append(j)
+    mod = np.array(mod)
+    for i in range(mod.shape[0]):
+        ohe = np.zeros(10)
+        if i % 200 == 0 and i != 0:
+            n +=1
+        wav = mod[i]
+        wavList = np.split(wav, 60)
+        splitedData.append(wavList)
+        ohe[n] = 1
+        classes.append(ohe)
+    return np.array(splitedData), np.array(classes)    
 
 def format_data(data):
     splitedData = []
@@ -52,7 +87,7 @@ def format_data(data):
     mod = np.array(mod)
     for i in range(mod.shape[0]):
         ohe = np.zeros(10)
-        if i % 10000 == 0 and i != 0:
+        if i % 9800 == 0 and i != 0:
             n +=1
         wav = mod[i]
         wavList = np.split(wav, 60)
