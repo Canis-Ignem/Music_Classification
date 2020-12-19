@@ -64,7 +64,7 @@ def format_data_test(data):
     mod = np.array(mod)
     for i in range(mod.shape[0]):
         ohe = np.zeros(10)
-        if i % 200 == 0 and i != 0:
+        if i % 500 == 0 and i != 0:
             n +=1
         wav = mod[i]
         wavList = np.split(wav, 60)
@@ -87,7 +87,7 @@ def format_data(data):
     mod = np.array(mod)
     for i in range(mod.shape[0]):
         ohe = np.zeros(10)
-        if i % 9800 == 0 and i != 0:
+        if i % 9500 == 0 and i != 0:
             n +=1
         wav = mod[i]
         wavList = np.split(wav, 60)

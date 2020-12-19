@@ -49,7 +49,7 @@ Johann_Sebastian_Bach.add(Dropout(0.3))
 
 Johann_Sebastian_Bach.add(Dense(10, activation='softmax'))
 opt = keras.optimizers.Adam(learning_rate=0.0001)
-Johann_Sebastian_Bach.compile(loss="categorical_crossentropy", optimizer=opt, metrics=['categorical_crossentropy','accuracy','confusion_matrix'])
+Johann_Sebastian_Bach.compile(loss="categorical_crossentropy", optimizer=opt, metrics=['categorical_crossentropy','accuracy'])
 
 Johann_Sebastian_Bach.summary()
 
